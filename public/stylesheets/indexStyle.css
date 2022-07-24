@@ -1,0 +1,23 @@
+body {
+    background-color: #abc8c7;
+    font-family: 'Philosopher', sans-serif;
+}
+
+h1 {
+    margin: 30px;
+    font-weight: bold;
+}
+.row {
+    background-color: #d6eadf;
+    color: black;
+    box-shadow: 6px 6px 10px rgb(146, 143, 143);
+}
+#index-btn {
+    background-color: #c59fc9;
+    border: white;
+}
+
+#index-btn:hover {
+    box-shadow: 0 0 20px #d264b6;
+
+}

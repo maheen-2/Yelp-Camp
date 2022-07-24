@@ -1,0 +1,62 @@
+<% layout("layouts/boilerplate") %>
+<link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Inline+One&family=Black+Ops+One&family=Blaka+Hollow&family=Cormorant+Garamond:wght@300&family=Edu+QLD+Beginner&family=IM+Fell+DW+Pica&family=Lobster&family=Merienda:wght@400;700&family=Monofett&family=Nunito:wght@200&family=Open+Sans:wght@300&family=Patrick+Hand&family=Philosopher&family=Roboto:wght@100&family=Rubik+Moonrocks&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/stylesheets/indexStyle.css">
+
+<div id="map" style="width: vw; height: 500px"></div>
+      
+        <h1>ALL CAMPGROUNDS:</h1>
+
+        <%for(let campground of campgrounds){%>
+            <div class="card mb-3">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <!--If the owner of camoground inserts image then 1st img will become cover pic of that camp-->
+                        <%if(campground.images.length) {%>
+                            <img class="img-fluid" alt="" src="<%=campground.images[0].url%>">
+                            <% }else {%>
+                                <!--If the owner doesn't inserts image then display the following img-->
+                                <img class="img-fluid" alt=""
+                                    src="https://res.cloudinary.com/douqbebwk/image/upload/v1600103881/YelpCamp/lz8jjv2gyynjil7lswf4.png">
+                                <% } %>
+                    </div>
+
+
+                    <div class="col-md-8">
+                        <div class="card-body">
+
+                            <b class="card-title">
+                                <%= campground.title %>
+                            </b>
+
+                            <p class="card-description">
+                                <%= campground.description %>
+                            </p>
+
+                            <h5 class="card-location">
+                                <!--"text-muted" makes the following text appear lighter than the rest:-->
+                                <small class="text-muted">
+                                    <%= campground.location %>
+                                </small>
+                            </h5>
+
+                            <a href="/campgrounds/<%=campground._id%>" id="index-btn" class="btn btn-primary">
+                                View <%= campground.title %>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+    </div>
+
+
+    <script> 
+    //or we could hard code the actual MAPBOX TOKEN from .env.
+    // we do it this way bcuz if our token changes then it'll automatically be changed at all places where it's applied
+        const mapToken = '<%-process.env.MAPBOX_TOKEN%>'; 
+        //Initially, data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson' ◀ go to this link to know its JSON data & to know why we used features key.
+        const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+    </script>
+    <script src="/javascript/clusterMap.js"></script>

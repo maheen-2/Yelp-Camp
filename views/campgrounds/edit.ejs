@@ -1,0 +1,88 @@
+<% layout("layouts/boilerplate") %>
+
+    <div class="row">
+        <h1 class="text-center">Edit Campground</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" novalidate class="validated-form"
+                enctype="multipart/form-data">
+                <!-- Now we'll make sure the user must write something in the blank fields before submitting. -->
+                <!-- We can make the input field required by 2 main ways: -->
+
+                <!--1️⃣ put "required" keyword in each input ❌-->
+                <!--It works completely fine, but it's not that attractive as only a prompt appears saying "Please fill this field"-->
+
+                <!--2️⃣ use bootstrap validation (it uses both html & js)😲-->
+                <!--So first put "required" in each input. Then, put "novalidate" in the form to tell the browser don't do any validation, we'll do it ourselves using JS..-->
+                <!--Also give the form a class "validated-form"-->
+                <!--Then I copied the JS bootstrap. Make sure to understand it!-->
+                <!--Now everything works!-->
+                <!--To make it more fancier add a div class "valid-feedback" into each input with atext inside we want to be shown when the user types something in the field.-->
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="campground[title]"
+                        value="<%= campground.title %> " placeholder="Title" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="location">Location</label>
+                        <input class="form-control" type="text" id="location" name="campground[location]"
+                            value="<%= campground.location %> " placeholder="Location" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <!--For 'edit.ejs' file:
+                        Shud understand the difference btw 'campground[property]' & 'campground.property'.
+                        The value property contains the default value.-->
+
+
+                        <div class="mb-3">
+                            <label class="form-label" for="price">Campground Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="text" class="form-control" name="campground[price]"
+                                    value="<%= campground.price %> " aria-label="Amount (to the nearest dollar)"
+                                    placeholder="0" required>
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="description">Description</label>
+                                <textarea class="form-control" type="text" id="description"
+                                    name="campground[description]" value="<%= campground.description %> "
+                                    placeholder="Description" required><%= campground.description %> </textarea>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+
+                            <!--Adding Images-->
+                            <div class="mb-3">
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="inputGroupFile02" name="image" multiple>
+                                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                </div>
+                            </div>
+
+                            <!--Deleting Images b ased on their index number-->
+                            <div class="mb-3">
+                                <% campground.images.forEach(function(img, i) { %>
+                                    <img src="<%=img.thumbnail %>" class="img-thumbnail" alt="">
+                                    <div class="form-check-inline">
+                                        <input type="checkbox" id="image-<%=i%>" name="deleteImages[]"
+                                            value="<%=img.filename%>">
+                                    </div>
+                                    <label for="image-<%=i%>">Delete?</label>
+                                    <% })%>
+                            </div>
+
+                            <button class="btn btn-info">UPDATE CAMPGROUND</button>
+                        </div>
+
+                        <div><a href="/campgrounds/<%= campground._id %> ">Back To Campground</a></div>
+                    </div>
+                </div>
+            </form>

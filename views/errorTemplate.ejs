@@ -1,0 +1,14 @@
+<% layout("layouts/boilerplate") %>
+   
+<!--Generates popup green/red alerts in case a user meks an error-->
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading"><%=err.message%></h4>
+                <!--if the user is not from the production team, then he shoukd not be able to c the whole error stack in case of meking a mistake.-->
+                <% if (process.env.NODE_ENV !== "production") { %> 
+                <p><%= err.stack %></p>
+                <% } %>
+            </div>
+        </div>
+    </div>

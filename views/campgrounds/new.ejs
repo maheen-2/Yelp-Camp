@@ -1,0 +1,97 @@
+<% layout("layouts/boilerplate") %>
+<link rel="stylesheet" href="/stylesheets/usersStyle.css">
+
+    <div class="row">
+        <h1 class="text-center">Create A New Campground</h1>
+        <div class="col-6 offset-3">
+            <form action="/campgrounds" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                <!-- Now we'll make sure the user must write something in the blank fields before submitting. -->
+                <!-- We can make the input field required by 2 main ways: -->
+
+                <!--1️⃣ put "required" keyword in each input ❌-->
+                <!--It works completely fine, but it's not that attractive as only a prompt appears saying "Please fill this field"-->
+
+                <!--2️⃣ use bootstrap validation (it uses both html & js)😲-->
+                <!--So first put "required" in each input. Then, put "novalidate" in the form to tell the browser don't do any validation, we'll do it ourselves using JS..-->
+                <!--Also give the form a class "validated-form"-->
+                <!--Then I copied the JS bootstrap. Make sure to understand it!-->
+                <!--Now everything works!-->
+                <!--To make it more fancier add a div class "valid-feedback" into each input with atext inside we want to be shown when the user types something in the field.-->
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="campground[title]" placeholder="Title"
+                        required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <!--The name attribute specifies the name of an <input> element.
+    The name 📛 attribute is used to reference elements in a JavaScript, or to reference form data after a form is submitted.
+    Note: Only form elements with a name attribute will have their values passed when submitting a form.-->
+                    <input class="form-control" type="text" id="location" name="campground[location]"
+                        placeholder="Location" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="price">Campground Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" name="campground[price]" aria-label="price"
+                            aria-describedby="price-label" placeholder="0.00" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="campground[description]"
+                        placeholder="Description" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="input-group custom-file">
+                        <input type="file" class="form-control" id="inputGroupFile02" name="image" multiple>
+                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                    </div>
+                </div>
+
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="image">Image Url</label>
+                    <input class="form-control" type="text" id="image" name="campground[image]" placeholder="image"
+                        required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>-->
+
+                <div class="mb-3">
+                    <button id="submit" class="btn btn-success">
+                        <span>ADD CAMPGROUNDS</span><i></i>
+                        </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+     <!--🎃🎃🎃
+                    Why validate it❓
+                    Client-side validation
+                bcuz we need to mek sure that the user doesn't submit the form empty.
+                🟡First type "required" in the text area or input.
+                🔵Second add a wierd thing in the form "novalidate" where we tell the form not to validate with html validation -> do it as i say.
+                🟣Then add a class to ur farm called "validated-form"
+                🔴Then add some JS to mek it all work -> I added it in "/javascript/validateForms.js" & included its script in "boilerplate.ejs".
+                🟠DONE!! -> review field highlights in red if submitted empty.
+                🟢For finishing touches -> add "valid-feedback" class below text area.
+                -->

@@ -1,0 +1,167 @@
+<% layout("layouts/boilerplate") %>
+<link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Inline+One&family=Black+Ops+One&family=Blaka+Hollow&family=Cormorant+Garamond:wght@300&family=Edu+QLD+Beginner&family=IM+Fell+DW+Pica&family=Lobster&family=Merienda:wght@400;700&family=Monofett&family=Nunito:wght@200&family=Open+Sans:wght@300&family=Patrick+Hand&family=Philosopher&family=Roboto:wght@100&family=Rubik+Moonrocks&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/stars.css">
+
+    <!--For campground:-->
+    <div class="row">
+        <div class="col-6">
+           <div id="campgroundCarousel" class="carousel slide" data-bs-ride="carousel">
+                <!--Slideshow of cycling thru a series of imgs-->
+                <div class="carousel-inner">
+                    <% campground.images.forEach((img, i)=> { %>
+                        <!--used for each with i(index) so that we can give them a condition of active means that first img is active & will be displayed first-->
+                        <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+                            <img src="<%= img.url%>" class="d-block w-100" alt="">
+                        </div>
+                        <% }) %>
+
+                </div>
+                <% if(campground.images.length> 1) {%>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#campgroundCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#campgroundCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    <% } %>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= campground.title %>
+                    </h5>
+
+                    <p class="card-text">
+                        <%= campground.description %>
+                    </p>
+                </div>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-muted">
+                        <%= campground.location %>
+                    </li>
+                    <li class="list-group-item">Submitted by <%=campground.author.username%>
+                    </li>
+                    <li class="list-group-item">
+                        $<%= campground.price %>/night
+                    </li>
+                </ul>
+
+                <% if(currentUser && campground.author.equals(currentUser._id)) {%>
+                    <div class="card-body">
+                        <a href="/campgrounds/<%=campground._id %>/edit" class="card-link btn btn-info">Edit</a>
+                        <!--For delete, must use method-override:-->
+                        <form class="d-inline" action="/campgrounds/<%= campground._id%>?_method=DELETE " method="POST">
+                            <button class="btn btn-danger">DELETE</button>
+                        </form>
+                    </div>
+                    <% } %>
+                        <!--"text-muted" makes the following text appear lighter than the rest:-->
+                        <div class="card-footer text-muted">
+                            2 days ago
+                        </div>
+            </div>
+        </div>
+
+        <!--For reviews:-->
+        <div class="col-6">
+            <!--Displaying map div-->
+            <div id='map' style='width: vw; height: 300px;'></div>
+            <% if(currentUser){ %>
+                <h4 class="mt-5"><b>Leave a Review:</b></h4>
+                <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="mb-3 validated-form"
+                    novalidate>
+                    <!--Copied 👇🏼 star rating form from: https://github.com/LunarLogic/starability-->
+                    <fieldset class="starability-slot">
+                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
+                            aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                    <div class="mb-3">
+                        <label class="form-label" for="body">Review</label>
+
+                        <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"
+                            required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <button class="btn btn-success">Submit</button>
+                </form>
+                <% } %>
+
+                    <% for(let review of campground.reviews) {%>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <%= review.author.username%>
+                                </h6>
+                                <!--Copied 👇🏼 show star rating from: https://github.com/LunarLogic/starability-->
+                                <p class="starability-result" data-rating="<%=review.rating%>">
+                                    Rated: <%= review.rating %> stars
+                                </p>
+                                <p class="card-text">Review: <%= review.body %>
+                                </p>
+                                <% if( currentUser && review.author.equals(currentUser._id)) {%>
+                                    <form
+                                        action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                        method="POST">
+                                        <button  class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                    <% } %>
+                            </div>
+                        </div>
+                        <% } %>
+        </div>
+    </div>
+
+
+    <script> // MAPBOX:👇🏼
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFoZWVuMSIsImEiOiJjbDVzZXd3emowbXVuM2luMHZ1Z25kejAyIn0.MaYfek24p5b83ib1JMvPFA';
+        const campground = <%- JSON.stringify(campground) %>; // turn off format on save
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location URL
+            center: campground.geometry.coordinates, // starting position [lng, lat]
+            zoom: 10, // starting zoom
+            projection: 'globe' // display the map as a 3D globe
+        });
+
+// Adding map control options for the convenience of the user.
+map.addControl(new mapboxgl.NavigationControl(), "bottom-left");
+
+        new mapboxgl.Marker() //showing map marker pointing to exact location
+    .setLngLat(campground.geometry.coordinates)
+    .setPopup( // showing map popup appear on exact location highlighting name and location of the camp
+        new mapboxgl.Popup({ offset: 25 })
+            .setHTML(
+                `<h4>${campground.title}</h4><p>${campground.location}</p>`
+            )
+    )
+            .addTo(map);
+    </script>
+      <!--🎃🎃🎃
+                    Why validate it❓
+                    Client-side validation
+                bcuz we need to mek sure that the user doesn't submit the form empty.
+                🟡First type "required" in the text area or input.
+                🔵Second add a wierd thing in the form "novalidate" where we tell the form not to validate with html validation -> do it as i say.
+                🟣Then add a class to ur farm called "validated-form"
+                🔴Then add some JS to mek it all work -> I added it in "/javascript/validateForms.js" & included its script in "boilerplate.ejs".
+                🟠DONE!! -> review field highlights in red if submitted empty.
+                🟢For finishing touches -> add "valid-feedback" class below text area.
+                -->

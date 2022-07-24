@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YelpCamp</title>
+    <!--This script 👇🏼 is to connect CSS bootstrap with this folder-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!--This script 👇🏼 is to connect CSS of maps with this folder-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+
+</head>
+
+<body class="d-flex flex-column vh-100">
+    <!--We must include navbar where we want it to be on our web-page so do the footer & flash messages-->
+    <%- include('../partials/nav-bar') %>
+        <main class="container mt-5">
+            <%- include('../partials/flash') %>
+                <%- body %>
+        </main>
+
+        <%- include('../partials/footer') %>
+
+            <!--This script 👇🏼-->
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous"></script>
+
+            <!--This script 👇🏼 is to connect JS bootstrap with this folder-->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+                crossorigin="anonymous"></script>
+
+            <!--A little plugin which makes Bootstrap 4 custom file input dynamic with no dependencies.-->
+            <!--Call it in public/js/validateForms-->
+            <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
+            <!--This script 👇🏼 is to be used for form validation-->
+            <script src='/javascript/validateForms.js'></script>
+            <!--Order does matters. This script must be below bootrap scripts otherwise overwritten.-->
+
+</body>
+
+</html>
+            

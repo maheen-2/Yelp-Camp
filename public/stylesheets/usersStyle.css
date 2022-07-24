@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:300");
+
+body {
+    background-color: #d6eadf;
+}
+.card-body {
+    background-color: #abc8c7;
+    font-family: 'Philosopher', sans-serif;
+}
+
+#submit {
+    position: relative;
+    margin: 20px 0 10px 0;
+    width: 100%;
+    color: #edf2f4;
+    background-color: black;
+    border-color: #00afb9;
+    letter-spacing: 0.1em;
+    transition: 0.5s;
+}
+
+#submit:hover{
+    color: #00afb9;
+    background-color: #00afb9;
+    letter-spacing: 0.25em;
+    font-weight: bold;
+    box-shadow: 0 0 20px #00afb9;
+}
+
+#submit:before{
+    position: absolute;
+    content: " ";
+    inset: 2px; /* inset defines physical offsets that coressponds to top, right, bottom & left of the box.*/
+    background-color: black;
+}
+
+#submit span {
+    position: relative;
+    z-index: 1;
+}
+
+#submit i{
+position: absolute;
+inset: 0;
+display: block;
+}
+
+#submit i::before{
+position: absolute;
+content: " ";
+top: 0;
+left: 80%;
+width: 50px;
+height: 4px;
+background-color: #005f73;
+transform: translateX(-50%) skewX(325deg);
+transition: 0.5s;
+}
+
+#submit:hover i::before{
+    width: 90px;
+    left: 20%;
+}
+
+#submit i::after{
+    position: absolute;
+    content: " ";
+    bottom: 0;
+    right: 80%;
+    width: 50px;
+    height: 4px;
+    background-color: #005f73;
+    transform: translateX(50%) skewX(325deg);
+    transition: 0.5s;
+    }
+    
+    #submit:hover i::after{
+        width: 90px;
+        right: 20%;
+    }
